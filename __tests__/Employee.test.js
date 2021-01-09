@@ -6,5 +6,5 @@ test('employee constructor creates new employee object', () => {
 
     expect(employee.name).toBe('dave');
     expect(employee.empId).toBe('69');
-    expect(employee.email).toEqual(expect.any(String));
+    expect(employee.email).toBe('bro420@mail.com');
 })
