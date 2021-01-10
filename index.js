@@ -54,16 +54,16 @@ function nextStep() {
         choices: ['Add Engineer', 'Add Intern', 'Finish'],
     }])
     .then(answers => {
-        if ('Add Engineer') {
-            addEngineer();
-            return;
-        } else if ('Add Intern') {
-            addIntern();
-            return;
-        } else {
-            return;
+        switch(answers.engineerOrIntern) {
+            case 'Add Engineer':
+                addEngineer();
+                break;
+            case 'Add Intern':
+                addIntern();
+                break;
+            case 'Fnish':
+                break;
         }
-        console.log(answers);
     })
 };
 
@@ -90,10 +90,11 @@ function addIntern() {
         }])
         .then(answers => {
             const intern = new Intern(answers.school);
-            const school = intern.getSchool();
+            const school = intern.getSchoolName();
             nextStep();
         })
 };
 
 
 addManager();
+module.exports = index;
