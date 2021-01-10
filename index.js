@@ -13,18 +13,8 @@ function addManager() {
         }])
         .then(answers => {
             const manager = new Manager(answers.managerName);
-            const managerName = manager.getManagerName();
+            const managerName = manager.getName();
             addEmployee();
-            inquirer
-                .prompt([{
-                    type: 'list',
-                    name: 'engineerOrIntern',
-                    message: 'What would you like to do next?',
-                    choices: ['Add Engineer', 'Add Intern', 'Finish'],
-                }])
-                .then(answers => {
-                    console.log(answers);
-                })
         })
 }
 
@@ -51,6 +41,59 @@ function addEmployee() {
             const name = employee.getName();
             const id = employee.getId();
             const email = employee.getEmail();
+            nextStep();
         });
+       
 };
+function nextStep() {
+    inquirer
+    .prompt([{
+        type: 'list',
+        name: 'engineerOrIntern',
+        message: 'What would you like to do next?',
+        choices: ['Add Engineer', 'Add Intern', 'Finish'],
+    }])
+    .then(answers => {
+        if ('Add Engineer') {
+            addEngineer();
+            return;
+        } else if ('Add Intern') {
+            addIntern();
+            return;
+        } else {
+            return;
+        }
+        console.log(answers);
+    })
+};
+
+function addEngineer() {
+    inquirer
+        .prompt([{
+            type: 'input',
+            name: 'githubUsername',
+            message: 'Please enter employee Github username',
+        }])
+        .then(answers => {
+            const engineer = new Engineer(answers.githubUsername);
+            const githubUsername = engineer.getGithubUsername();
+            nextStep();
+        })
+};
+
+function addIntern() {
+    inquirer
+        .prompt([{
+            type: 'input',
+            name: 'school',
+            message: 'Please enter intern school',
+        }])
+        .then(answers => {
+            const intern = new Intern(answers.school);
+            const school = intern.getSchool();
+            nextStep();
+        })
+};
+
+
 addManager();

@@ -1,4 +1,5 @@
 //require index.js
+const index = require('./index')
 
 
 //template literal hmtl
