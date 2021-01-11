@@ -3,6 +3,7 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
+const writeFile = require('./src/html-template');
 
 const userInput = [];
 
@@ -14,7 +15,9 @@ function addManager() {
             message: 'Enter manager office number'
         }])
         .then(answers => {
-            const manager = new Manager(answers.officeNumber);
+            //this will throw an error because employee is not defined--I can't figure out how to collect the input
+            //from the employee prompt and pass it into the subclasses when creating new manager, intern, or engineer objects
+            const manager = new Manager(employee.name, employee.empId, employee. email, answers.officeNumber);
             const officeNumber = manager.getOfficeNumber();
             addEmployee();
         })
@@ -66,6 +69,7 @@ function nextStep() {
                 break;
             case 'Finish':
                 console.log(userInput);
+                writeFile(userInput);
                 break;
         }
     })
@@ -79,7 +83,8 @@ function addEngineer() {
             message: 'Please enter employee Github username',
         }])
         .then(answers => {
-            const engineer = new Engineer(answers.githubUsername);
+            //see note in addManager()
+            const engineer = new Engineer(employee.name, employee.empId, employee.email, answers.githubUsername);
             const githubUsername = engineer.getGithubUsername();
             userInput.push(engineer);
             addEmployee();
@@ -94,7 +99,8 @@ function addIntern() {
             message: 'Please enter intern school',
         }])
         .then(answers => {
-            const intern = new Intern(answers.school);
+            //see note in addManager()
+            const intern = new Intern(employee.name, employee.empId, employee.email, answers.school);
             const school = intern.getSchoolName();
             userInput.push(intern);
             addEmployee();
@@ -102,3 +108,4 @@ function addIntern() {
 };
 
 addManager();
+module.exports = userInput;
