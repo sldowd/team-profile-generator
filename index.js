@@ -4,16 +4,18 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
 
+const userInput = [];
+
 function addManager() {
     inquirer
         .prompt([{
             type: 'input',
-            name: 'managerName',
-            message: 'Enter manager name'
+            name: 'officeNumber',
+            message: 'Enter manager office number'
         }])
         .then(answers => {
-            const manager = new Manager(answers.managerName);
-            const managerName = manager.getName();
+            const manager = new Manager(answers.officeNumber);
+            const officeNumber = manager.getOfficeNumber();
             addEmployee();
         })
 }
@@ -41,6 +43,7 @@ function addEmployee() {
             const name = employee.getName();
             const id = employee.getId();
             const email = employee.getEmail();
+            userInput.push(employee);
             nextStep();
         });
        
@@ -61,7 +64,8 @@ function nextStep() {
             case 'Add Intern':
                 addIntern();
                 break;
-            case 'Fnish':
+            case 'Finish':
+                console.log(userInput);
                 break;
         }
     })
@@ -77,7 +81,8 @@ function addEngineer() {
         .then(answers => {
             const engineer = new Engineer(answers.githubUsername);
             const githubUsername = engineer.getGithubUsername();
-            nextStep();
+            userInput.push(engineer);
+            addEmployee();
         })
 };
 
@@ -91,10 +96,9 @@ function addIntern() {
         .then(answers => {
             const intern = new Intern(answers.school);
             const school = intern.getSchoolName();
-            nextStep();
+            userInput.push(intern);
+            addEmployee();
         })
 };
 
-
 addManager();
-module.exports = index;
