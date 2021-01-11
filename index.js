@@ -15,9 +15,10 @@ function addManager() {
             message: 'Enter manager office number'
         }])
         .then(answers => {
-            //this will throw an error because employee is not defined--I can't figure out how to collect the input
-            //from the employee prompt and pass it into the subclasses when creating new manager, intern, or engineer objects
-            const manager = new Manager(employee.name, employee.empId, employee. email, answers.officeNumber);
+            //I'm missing arguments in new Manager() below because
+            //I can't figure out how to pull info from the employee prompts and
+            //pass it into the constructor. The same goes for the addIntern() and addEngineer() functions.
+            const manager = new Manager(answers.officeNumber);
             const officeNumber = manager.getOfficeNumber();
             addEmployee();
         })
@@ -83,8 +84,8 @@ function addEngineer() {
             message: 'Please enter employee Github username',
         }])
         .then(answers => {
-            //see note in addManager()
-            const engineer = new Engineer(employee.name, employee.empId, employee.email, answers.githubUsername);
+            
+            const engineer = new Engineer(answers.githubUsername);
             const githubUsername = engineer.getGithubUsername();
             userInput.push(engineer);
             addEmployee();
@@ -99,8 +100,8 @@ function addIntern() {
             message: 'Please enter intern school',
         }])
         .then(answers => {
-            //see note in addManager()
-            const intern = new Intern(employee.name, employee.empId, employee.email, answers.school);
+            
+            const intern = new Intern(answers.school);
             const school = intern.getSchoolName();
             userInput.push(intern);
             addEmployee();
